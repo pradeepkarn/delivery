@@ -1,3 +1,5 @@
 config.php
 media
-vendorcomposer.lock
+vendor
+composer.lock
+*.zip

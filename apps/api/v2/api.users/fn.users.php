@@ -146,7 +146,7 @@ function return_user_data_trans($id,$db) {
     $ru->company_vat = $u->company_vat;
     $ru->national_id = $u->national_id;
     $ru->is_company = $u->is_company;
-    $ru->dob = date('Y-m-d H:i:s',strtotime($u->dob));
+    // $ru->dob = date('Y-m-d H:i:s',strtotime($u->dob));
     $ru->image = ($u->image!='') ? '/media/images/profiles/'.$u->image : null;
     $ru->token = $u->app_login_token;
     return $ru;
