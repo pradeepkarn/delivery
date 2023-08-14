@@ -48,7 +48,7 @@ function updatePage()
             $db->insertData['content_type'] = sanitize_remove_tags($_POST['content_type']);
         }
         $db->insertData['banner'] = $_POST['page_banner'];
-        $db->insertData['post_category'] = $_POST['post_category'];
+        // $db->insertData['post_category'] = $_POST['post_category'];
         if (isset($_POST['price'])) {
             $db->insertData['price'] = sanitize_remove_tags($_POST['price']);
         }

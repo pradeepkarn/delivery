@@ -62,6 +62,7 @@ switch ($path) {
             if(updatePage() === true){
                 echo js_alert("Update");
                 echo js("location.reload();");
+                exit;
             }
         }
         break;
