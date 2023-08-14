@@ -33,13 +33,10 @@
             
             <hr style="color:white;">
             <?php if (is_superuser()) { ?>
-            <li class="nav-item hide">
+            <li class="nav-item">
                 <a class="nav-link text-white" href="/<?php echo home; ?>/admin/sliders"> <i class="fa-solid fa-rectangle-list"></i> Sliders </a>
             </li>
-            <li class="nav-item hide">
-                <a class="nav-link text-white" href="/<?php echo home; ?>/admin/sliders"> <i class="fa-solid fa-rectangle-list"></i> Sliders </a>
-            </li>
-          
+            
             <li class="nav-item">
                 <a class="nav-link text-white" href="/<?php echo home; ?>/admin/enquiries"> <i class="fa-solid fa-rectangle-list"></i> Enquires </a>
             </li>
