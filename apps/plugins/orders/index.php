@@ -51,6 +51,29 @@ if ("{$url[0]}/{$url[1]}" == "admin/$plugin_dir") {
                     }
                     return;
                 }
+                if ($url[2] == 'update-parcel-booking-data-ajax') {
+               
+                    if (!$pass) {
+                        echo js_alert('Invalid access');
+                        return;
+                    } else {
+                        if (isset($_POST['pickup_date'])) {
+                            $db = new Dbobjects;
+                            $db->tableName = 'parcel_bookings';
+                            $db->pk($_POST['order_id']);
+                            $db->insertData['pickup_date'] = $_POST['pickup_date'];
+                            $db->insertData['pickup_time'] = $_POST['pickup_time'];
+                            // $db->insertData['last_action_on'] = date('Y-m-d H:i:s');
+                            if (isset($_POST['driver_id']) && intval($_POST['driver_id'])) {
+                                $db->insertData['assigned_driver_id'] = $_POST['driver_id'];
+                                $db->insertData['driver_price'] = $_POST['driver_price'];
+                            }
+                            $db->update();
+                            echo RELOAD;
+                        }
+                    }
+                    return;
+                }
                 if ($url[2] == 'change-order-status-update-ajax') {
                     if (!$pass) {
                         echo js_alert('Invalid access');
