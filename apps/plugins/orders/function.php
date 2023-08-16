@@ -61,7 +61,7 @@ function get_order_by_uinique_id($uid)
     $obj = new Model('parcel_bookings');
     $arr['unique_id'] = $uid;
     $cp = $obj->filter_index($arr);
-    return populate_carts($cp);
+    return $cp[0];
 }
 function populate_carts($paments)
 {

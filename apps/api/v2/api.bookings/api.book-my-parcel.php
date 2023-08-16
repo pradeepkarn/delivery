@@ -19,10 +19,14 @@ $data_list = [
     'from_address',
     'to_address',
     'length',
+    'length_unit',
     'width',
+    'width_unit',
     'height',
+    'height_unit',
     'weight',
-    'amount',
+    'weight_unit',
+    'user_amount',
     'pickup_date',
     'pickup_time',
     'delivery_date',
@@ -78,20 +82,24 @@ if ($user != false) {
     $arr['from_address'] = $req->from_address;
     $arr['to_address'] = $req->to_address;
     $arr['length'] = $req->length;
+    $arr['length_unit'] = $req->length_unit;
     $arr['width'] = $req->width;
+    $arr['width_unit'] = $req->width_unit;
     $arr['height'] = $req->height;
+    $arr['height_unit'] = $req->height_unit;
     $arr['weight'] = $req->weight;
-    $arr['amount'] = $req->amount;
+    $arr['weight_unit'] = $req->weight_unit;
+    $arr['user_amount'] = $req->user_amount;
     $arr['pickup_date'] = $req->pickup_date;
     $arr['pickup_time'] = $req->pickup_time;
     $arr['delivery_date'] = $req->delivery_date;
-    $arr['delivery_method'] = $req->delivery_method;
+    $arr['delivery_method'] = strtolower($req->delivery_method);
     $arr['your_contact'] = $req->your_contact;
     $arr['receiver_contact'] = $req->receiver_contact;
     $arr['parcel_detail'] = $req->parcel_detail;
     $arr['user_id'] = $user->id;
     $arr['user_email'] = $user->email;
-    $arr['unique_id'] = strtoupper(uniqid("PRCL".$user->id."U"));
+    $arr['unique_id'] = strtoupper(uniqid("PKG".$user->id."U"));
     // end
     $db->tableName = "parcel_bookings";
     $db->insertData = $arr;

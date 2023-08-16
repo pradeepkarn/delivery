@@ -52,7 +52,7 @@
 
     <div class="row">
         <?php
-        $status = ['new order', 'accepted', 'pending', 'assigned', 'delivered', 'cancelled', 'rejected', 'returned', 'completed'];
+        $status = $GLOBALS['bk_sts'];
         $card_color = ['bg-primary text-white', 'bg-secondary text-white', 'bg-warning text-dark', 'bg-info text-dark', 'bg-success text-white', 'bg-danger text-white', 'bg-danger text-dark', 'bg-dark text-white', 'bg-success text-white'];
         $i=0;
         foreach ($status as $key => $st) { 

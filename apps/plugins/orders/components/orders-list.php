@@ -14,7 +14,7 @@ else :
     $delvia = null;
 endif;
 $status = $_GET['status'];
-$ords = paid_orders($status, $user, $delvia);
+$ords = parcel_bookings($status);
 
 // print_r($ords->carts);
 ?>
@@ -39,7 +39,7 @@ $ords = paid_orders($status, $user, $delvia);
                     <p class=""><?php echo $status; ?></p>
 
                     <h2><?php echo $ords->ordCount; ?> <small>Order<?php echo $ords->ordCount > 1 ? "s" : null; ?></small></h2>
-                    <p>With <?php echo $ords->cartQty; ?> <small>Quantity</small></p>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-12 my-1">
@@ -70,37 +70,17 @@ $ords = paid_orders($status, $user, $delvia);
                 </style>
 
                 <?php foreach ($ords->cp as $cp) :
-                    $tamt = $cp['amount'] + $cp['discount_amt'];
-                    $whmngr = getData('pk_user', $cp['whmanager_id']);
+                    $tamt = $cp['user_amount'];
+                    $user = getData('pk_user',$cp['user_id']);
+                
                 ?>
                     <tbody style="border: 1px dotted black;">
                         <tr>
                             <th colspan="5"><span class="text-muted">Order Number : </span><?php echo $cp['unique_id']; ?></th>
                             <th class="hide">
-                                <span class="text-muted">Order Status : </span><?php echo ucfirst($cp['order_status']); ?> <br>
-                                <?php
-                                if ($cp['wh_status'] == "") : ?>
-                                    <input type="hidden" class="forward-data-id<?php echo $cp['id']; ?>" name="forward_to_wh_oid" value="<?php echo $cp['id']; ?>">
-                                    <select name="whmanager_id" class="form-select forward-data-id<?php echo $cp['id']; ?>">
-                                        <option value="0">Select Warehouse</option>
-                                        <?php foreach (getWhmanagerList() as $sm) { ?>
-                                            <option <?php if ($cp['whmanager_id'] == $sm['id']) {
-                                                        echo "selected";
-                                                    } ?> value="<?php echo $sm['id']; ?>"><?php echo $sm['name']; ?> (ID:<?php echo $sm['id']; ?>)</option>
-                                        <?php } ?>
-
-                                    </select>
-                                    <div class="d-grid">
-                                        <button type="button" id="ftwhbtnid<?php echo $cp['id']; ?>" class="my-2 btn btn-primary btn-sm">Forward to warehouse</button>
-                                    </div>
-                                    <?php
-                                    pkAjax("#ftwhbtnid{$cp['id']}", "/admin/orders/forward-to-warehouse-ajax", ".forward-data-id{$cp['id']}", "#res", "click");
-                                    ?>
-
-                                <?php else : ?>
-                                    <span class="text-muted">Warehouse Status : </span><?php echo ucfirst($cp['wh_status']); ?><br>
-                                    <span class="text-muted">Warehouse Manager : </span><?php echo $whmngr ? "{$whmngr['username']} ({$whmngr['id']})" : null; ?>
-                                <?php endif; ?>
+                                <span class="text-muted">Order Status : </span><?php echo ucfirst($cp['status']); ?> <br>
+                               
+                                
 
                             </th>
                             <th>
@@ -117,40 +97,42 @@ $ords = paid_orders($status, $user, $delvia);
                         </tr>
                         <tr>
                             <th colspan="2"><?php echo $cp['id']; ?></th>
-                            <td colspan="2">1000/-</td>
-                            <td colspan="2">850/-</td>
+                            <td colspan="2"><?php echo $cp['user_amount']; ?>/-</td>
+                            <td colspan="2"><?php echo $cp['driver_amount']>0?"{$cp['driver_amount']}/-":"Not assigned"; ?></td>
+                   
                         </tr>
                         <tr>
                             <th>Cust. Name</th>
                             <th>Mobile</th>
-                            <th>City</th>
+                 
                             <th>Pick up date</th>
 
                             <th>Delivery Date</th>
-                            <th>Last action</th>
+                
                         </tr>
 
                         <tr>
-                            <td><?php echo $cp['name']; ?></td>
-                            <td><?php echo $cp['mobile']; ?></td>
-                            <td><?php echo $cp['city']; ?></td>
+                            <td><?php echo $user['name']; ?></td>
+                            <td><?php echo $user['mobile']; ?></td>
+                   
 
-                            <td><?php echo date('Y-m-d H:i:s'); ?></td>
+                            <td><?php echo $cp['pickup_date']; ?></td>
                             <td><?php echo $cp['delivery_date']; ?></td>
-                            <td><?php echo $cp['last_action_on']; ?></td>
-
+                          
                         </tr>
                         <tr>
-                            <th colspan="3">Consignment Dimension (LxBxH)</th>
+                            <th colspan="2">Consignment Dimension (LxBxH)</th>
                             <th>From</th>
                             <th>To</th>
                             <th>Delivery Method</th>
                         </tr>
                         <tr>
-                            <td colspan="3">120mmx130mmx500mm</td>
-                            <td>Location1</td>
-                            <td>Location2</td>
-                            <td>Cab</td>
+                            <td colspan="2">
+                                <?php echo "{$cp['length']}{$cp['length_unit']}X{$cp['width']}{$cp['width_unit']}X{$cp['height']}{$cp['height_unit']}" ?>
+                            </td>
+                            <td><?php echo "{$cp['from_address']}"; ?></td>
+                            <td><?php echo "{$cp['to_address']}"; ?></td>
+                            <td><?php echo "{$cp['delivery_method']}"; ?></td>
                         </tr>
                     </tbody>
 

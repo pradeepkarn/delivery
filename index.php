@@ -32,7 +32,7 @@ if (authenticate()==true) {
   define('PASS',$pass);
 }
 
-
+$GLOBALS['bk_sts'] = $status = ['new order', 'accepted', 'pending', 'assigned', 'delivered', 'cancelled', 'rejected', 'returned', 'completed'];
 // $inst = new Dbobjects;
 // $inst->tableName = "pk_user";
 
