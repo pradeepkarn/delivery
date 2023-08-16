@@ -77,9 +77,9 @@ if ("$url[0]/$v" == "api/$v") {
             import("apps/api/$v/api.listings/api.get.services-by-salon-id.php");
             return;
         }
-// request for services booking
-        if ("{$url[2]}/$url[3]" == "request-for/services-booking") {
-            import("apps/api/$v/api.bookings/api.salon-services-booking-request.php");
+// request parcel booking
+        if ("{$url[2]}/$url[3]" == "request-for/parcel-booking") {
+            import("apps/api/$v/api.bookings/api.book-my-parcel.php");
             return;
         }
 // request for changes booking visiting date and time
