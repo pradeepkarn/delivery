@@ -9,17 +9,6 @@ function cart_by_status($status = 'cart', $ord = 'DESC', $limit = 100, $by = 'id
     $data->count = count($cart);
     return $data;
 }
-function parcel_bookings($order_status = 'processing', $ord = 'DESC', $limit = 100, $by = 'id')
-{
-    $data = new stdClass();
-    $obj = new Model('parcel_bookings');
-    $arr['status'] = $order_status;
-    $bookings = $obj->filter_index($arr, $ord, $limit, $by);
-    $data = new stdClass;
-    $data->cp = $bookings;
-    $data->ordCount = count($bookings);
-    return $data;
-}
 function paid_orders($order_status = 'processing', $user, $delvia=null, $ord = 'DESC', $limit = 100, $by = 'id')
 {
     $data = new stdClass();
@@ -58,7 +47,7 @@ function paid_orders($order_status = 'processing', $user, $delvia=null, $ord = '
 
 function get_order_by_uinique_id($uid)
 {
-    $obj = new Model('parcel_bookings');
+    $obj = new Model('customer_payment');
     $arr['unique_id'] = $uid;
     $cp = $obj->filter_index($arr);
     return populate_carts($cp);

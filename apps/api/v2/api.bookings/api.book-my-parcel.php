@@ -91,6 +91,7 @@ if ($user != false) {
     $arr['parcel_detail'] = $req->parcel_detail;
     $arr['user_id'] = $user->id;
     $arr['user_email'] = $user->email;
+    $arr['unique_id'] = strtoupper(uniqid("PRCL".$user->id."U"));
     // end
     $db->tableName = "parcel_bookings";
     $db->insertData = $arr;
