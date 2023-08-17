@@ -34,28 +34,24 @@ if ($user != false) {
         echo json_encode($res);
         die();
     }
-    if ($user->user_group != 'driver') {
-        $res['msg'] = "Please login with your driver account";
-        $res['data'] = null;
-        echo json_encode($res);
-        die();
-    }
+    // if ($user->user_group != 'user') {
+    //     $res['msg'] = "Please login with your driver account";
+    //     $res['data'] = null;
+    //     echo json_encode($res);
+    //     die();
+    // }
     $db = new Dbobjects;
     $db->tableName = "parcel_bookings";
-    $bkdeata = $db->filter(assoc_arr:['status'=>'accepted'],limit:1000,ord:'desc');
+    $bkdeata = $db->filter(assoc_arr:['user_id'=>$user->id],limit:1000,ord:'desc');
     $bkdata = [];
     foreach ($bkdeata as $key => $bk) {
         $bk = obj($bk);
         $bk->from_coordinate = json_decode($bk->from_coordinate);
         $bk->to_coordinate = json_decode($bk->to_coordinate);
-        if ($bk->assigned_driver_id!=null && $bk->assigned_driver_id != $user->id) {
-            continue;
-        }else{
-            $bkdata[] = $bk;
-        }
+        $bkdata[] = $bk;
     }
     if (count($bkdata)==0) {
-        $res['msg'] = "Currently no available bookings found";
+        $res['msg'] = "Currently no bookings requested by you";
         $res['data'] = null;
         echo json_encode($res);
         die();
