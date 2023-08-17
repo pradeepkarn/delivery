@@ -104,5 +104,12 @@ function format_parcel_bookings(array $bk) {
     $bk = obj($bk);
     $bk->from_coordinate = json_decode($bk->from_coordinate);
     $bk->to_coordinate = json_decode($bk->to_coordinate);
-    return $bk; 
+    $bk->user_amount = floatval($bk->user_amount);
+    $bk->driver_amount = floatval($bk->driver_amount);
+    $bk->length = floatval($bk->length);
+    $bk->width = floatval($bk->width);
+    $bk->height = floatval($bk->height);
+    $bk->weight = floatval($bk->weight);
+    $bk->driver_amount = floatval($bk->driver_amount);
+    return $bk;
 }
