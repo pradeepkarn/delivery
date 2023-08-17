@@ -101,6 +101,34 @@ if ("{$url[0]}/{$url[1]}" == "admin/$plugin_dir") {
                     }
                     return;
                 }
+                if ($url[2] == 'change-booking-status-update-ajax') {
+                    if (!$pass) {
+                        echo js_alert('Invalid access');
+                        return;
+                    } else {
+                        if (isset($_POST['status'])) {
+                      
+                            //    if ($_POST['status']=="cancelled") {
+                            //     if ($_POST['cancel_info']=="") {
+                            //         echo js_alert('Please specify the cancellation reason');
+                            //         echo RELOAD;
+                            //         return;
+                            //     }
+                            //    }
+                            
+                            $db = new Dbobjects;
+                            $db->tableName = 'parcel_bookings';
+                            $db->pk($_POST['order_id']);
+                            $db->insertData['status'] = $_POST['status'];
+                            // $db->insertData['cancel_info'] = $_POST['cancel_info'];
+                            // $db->insertData['last_action_on'] = date('Y-m-d H:i:s');
+                            $db->update();
+                            echo js_alert('This order moved successfully to accepted section');
+                            echo RELOAD;
+                        }
+                    }
+                    return;
+                }
                 if ($url[2] == 'forward-to-warehouse-ajax') {
                    
                     if (!$pass) {

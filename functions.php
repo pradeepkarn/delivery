@@ -735,6 +735,7 @@ function get_user_by_token($token = null)
       "dob" => $u->dob,
       "gender" => $u->gender,
       "image" => $u->image,
+      "user_group" => $u->user_group,
       "updated_at" => $u->updated_at
     );
   } else {

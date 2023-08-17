@@ -137,7 +137,7 @@ $cp = get_order_by_uinique_id($uid);
                         </td>
                         <td>
                             <?php echo ucfirst($cp['status']); ?>
-                            <select  id="change_order_status_select<?php echo $cp['id']; ?>" class="form-select ds<?php echo $cp['id']; ?>" name="order_status">
+                            <select  id="change_order_status_select<?php echo $cp['id']; ?>" class="form-select ds<?php echo $cp['id']; ?>" name="status">
                                 <option disabled>Change Status</option>
                                 <?php
                                 foreach ($GLOBALS['bk_sts'] as $key => $st) { ?>
@@ -148,7 +148,7 @@ $cp = get_order_by_uinique_id($uid);
                             <label for="">Cancellation Reason</label>
                             <textarea style="border:1px solid red; border-radius:0;" placeholder="Please specify the reason if order status is set to be cancelled" name="cancel_info" class="form-control ds<?php echo $cp['id']; ?>"><?php echo $cp['note']; ?></textarea>
                             <input type="hidden" class="ds<?php echo $cp['id']; ?>" name="order_id" value="<?php echo $cp['id']; ?>">
-                            <?php // pkAjax("#change_order_status_select{$cp['id']}", "/admin/orders/change-order-status-update-ajax", ".ds{$cp['id']}", "#res", 'change'); ?>
+                            <?php pkAjax("#change_order_status_select{$cp['id']}", "/admin/orders/change-booking-status-update-ajax", ".ds{$cp['id']}", "#res", 'change'); ?>
                         </td>
                         <td>
                             <div class="d-grid">
