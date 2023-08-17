@@ -1,6 +1,7 @@
 <?php
 $v = API_V;
 import("apps/api/$v/api.users/fn.users.php");
+import("apps/api/$v/api.bookings/fn-bookings.php");
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'POST') {
     // $req = json_decode(file_get_contents('php://input'));
@@ -45,9 +46,7 @@ if ($user != false) {
     $bkdeata = $db->filter(assoc_arr:['user_id'=>$user->id],limit:1000,ord:'desc');
     $bkdata = [];
     foreach ($bkdeata as $key => $bk) {
-        $bk = obj($bk);
-        $bk->from_coordinate = json_decode($bk->from_coordinate);
-        $bk->to_coordinate = json_decode($bk->to_coordinate);
+        $bk = format_parcel_bookings($bk);
         $bkdata[] = $bk;
     }
     if (count($bkdata)==0) {

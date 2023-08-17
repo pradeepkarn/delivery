@@ -99,3 +99,10 @@ function total_service_time($jsnData) {
     }
     return floor($total_min/60)."Hr:".($total_min%60) ."Min";
 }
+
+function format_parcel_bookings(array $bk) {
+    $bk = obj($bk);
+    $bk->from_coordinate = json_decode($bk->from_coordinate);
+    $bk->to_coordinate = json_decode($bk->to_coordinate);
+    return $bk; 
+}

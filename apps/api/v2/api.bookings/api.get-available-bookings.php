@@ -1,6 +1,7 @@
 <?php
 $v = API_V;
 import("apps/api/$v/api.users/fn.users.php");
+import("apps/api/$v/api.bookings/fn-bookings.php");
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method === 'POST') {
     // $req = json_decode(file_get_contents('php://input'));
@@ -45,9 +46,7 @@ if ($user != false) {
     $bkdeata = $db->filter(assoc_arr:['status'=>'accepted'],limit:1000,ord:'desc');
     $bkdata = [];
     foreach ($bkdeata as $key => $bk) {
-        $bk = obj($bk);
-        $bk->from_coordinate = json_decode($bk->from_coordinate);
-        $bk->to_coordinate = json_decode($bk->to_coordinate);
+        $bk = format_parcel_bookings($bk);
         if ($bk->assigned_driver_id!=null && $bk->assigned_driver_id != $user->id) {
             continue;
         }else{
