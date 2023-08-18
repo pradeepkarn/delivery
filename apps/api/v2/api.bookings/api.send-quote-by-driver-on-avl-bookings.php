@@ -16,8 +16,7 @@ if ($method === 'POST') {
 $data_list = [
     'token',
     'booking_id',
-    'quote_amount',
-    'delivery_method_id'
+    'quote_amount'
 ];
 
 // Initialize the response array
