@@ -113,7 +113,7 @@ function format_parcel_bookings(array $bk)
     $bk->height = floatval($bk->height);
     $bk->weight = floatval($bk->weight);
     $bk->driver_amount = floatval($bk->driver_amount);
-    if ($bk->assigned_driver_id != 0 || $bk->assigned_driver_id != '') {
+    if ($bk->assigned_driver_id != 0 && $bk->assigned_driver_id != '') {
         $drv = obj(getData('pk_user', $bk->assigned_driver_id));
         $bk->assigned_driver = array(
             'id' => $drv->id,
@@ -127,7 +127,7 @@ function format_parcel_bookings(array $bk)
     } else {
         $bk->assigned_driver = null;
     }
-    if ($bk->user_id != 0 || $bk->user_id == '') {
+    if ($bk->user_id != 0 && $bk->user_id != '') {
         $usr = obj(getData('pk_user', $bk->user_id));
         $bk->user = array(
             'id' => $usr->id,
