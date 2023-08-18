@@ -103,8 +103,8 @@ if ("$url[0]/$v" == "api/$v") {
             return;
         }
 // driver requests on bookings
-        if ("{$url[2]}/$url[3]" == "driver/requested-bookings") {
-            import("apps/api/$v/api.bookings/api.driver-requests-on-bookings.php");
+        if ("{$url[2]}/$url[3]" == "driver/requests-his-on-bookings") {
+            import("apps/api/$v/api.bookings/api.driver-requests-his-on-bookings.php");
             return;
         }
 
