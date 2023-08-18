@@ -102,6 +102,7 @@ function total_service_time($jsnData) {
 
 function format_parcel_bookings(array $bk) {
     $bk = obj($bk);
+    unset($bk->user_email);
     $bk->from_coordinate = json_decode($bk->from_coordinate);
     $bk->to_coordinate = json_decode($bk->to_coordinate);
     $bk->user_amount = floatval($bk->user_amount);
