@@ -87,6 +87,11 @@ if ("$url[0]/$v" == "api/$v") {
             import("apps/api/$v/api.bookings/api.get-available-bookings.php");
             return;
         }
+// send quote by driver
+        if ("{$url[2]}/$url[3]" == "send/quote-by-driver") {
+            import("apps/api/$v/api.bookings/api.send-quote-by-driver-on-avl-bookings.php");
+            return;
+        }
 // get my bookings
         if ("{$url[2]}/$url[3]" == "get/my-bookings") {
             import("apps/api/$v/api.bookings/api.get-my-bookings.php");

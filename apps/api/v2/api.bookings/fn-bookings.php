@@ -23,7 +23,7 @@ function change_booking_satus_api($user_id, $booking_id, $status = 'cancelled', 
     $proms->tableName = 'salon_bookings';
     $bkng = $proms->filter(['user_id' => $user_id, 'id' => $booking_id]);
     if (count($bkng) > 0) {
-        if ($bkng[0]['status']=='cancelled') {
+        if ($bkng[0]['status'] == 'cancelled') {
             $res['msg'] = "This booking has already been cancelled";
             $res['data'] = false;
             return $res;
@@ -56,7 +56,7 @@ function change_visiting_datetime($user_id, $booking_id, $date, $time, $db = nul
     $proms->tableName = 'salon_bookings';
     $bkng = $proms->filter(['user_id' => $user_id, 'id' => $booking_id]);
     if (count($bkng) > 0) {
-        if ($bkng[0]['status']=='cancelled') {
+        if ($bkng[0]['status'] == 'cancelled') {
             $res['msg'] = "This booking has already been cancelled";
             $res['data'] = false;
             return $res;
@@ -80,27 +80,28 @@ function change_visiting_datetime($user_id, $booking_id, $date, $time, $db = nul
     }
 }
 
-function total_service_time($jsnData) {
-    $total_min=0;
+function total_service_time($jsnData)
+{
+    $total_min = 0;
     $jsn = json_decode($jsnData);
     if (isset($jsn->services)) {
         foreach ($jsn->services as $srvid) {
             $srvs = getData('content', $srvid->id);
             if ($srvs) {
                 $srvs = obj($srvs);
-                if ($srvs->duration_unit=="min") {
+                if ($srvs->duration_unit == "min") {
                     $total_min += $srvs->duration;
-                }else{
-                    $total_min += $srvs->duration*60;
+                } else {
+                    $total_min += $srvs->duration * 60;
                 }
             }
         }
-        
     }
-    return floor($total_min/60)."Hr:".($total_min%60) ."Min";
+    return floor($total_min / 60) . "Hr:" . ($total_min % 60) . "Min";
 }
 
-function format_parcel_bookings(array $bk) {
+function format_parcel_bookings(array $bk)
+{
     $bk = obj($bk);
     unset($bk->user_email);
     $bk->from_coordinate = json_decode($bk->from_coordinate);
@@ -112,34 +113,43 @@ function format_parcel_bookings(array $bk) {
     $bk->height = floatval($bk->height);
     $bk->weight = floatval($bk->weight);
     $bk->driver_amount = floatval($bk->driver_amount);
-    if ($bk->assigned_driver_id!=0 || $bk->assigned_driver_id=='') {
-        $drv = obj(getData('pk_user',$bk->assigned_driver_id));
+    if ($bk->assigned_driver_id != 0 || $bk->assigned_driver_id == '') {
+        $drv = obj(getData('pk_user', $bk->assigned_driver_id));
         $bk->assigned_driver = array(
-            'id'=>$drv->id,
-            'first_name'=>$drv->first_name,
-            'last_name'=>$drv->last_name,
-            'image'=>dp_or_null($drv->image),
-            'isd_code'=>$drv->isd_code,
-            'mobile'=>$drv->mobile,
-            'email'=>$drv->email,
+            'id' => $drv->id,
+            'first_name' => $drv->first_name,
+            'last_name' => $drv->last_name,
+            'image' => dp_or_null($drv->image),
+            'isd_code' => $drv->isd_code,
+            'mobile' => $drv->mobile,
+            'email' => $drv->email,
         );
-    }else{
+    } else {
         $bk->assigned_driver = null;
     }
-    if ($bk->user_id!=0 || $bk->user_id=='') {
-        $usr = obj(getData('pk_user',$bk->user_id));
+    if ($bk->user_id != 0 || $bk->user_id == '') {
+        $usr = obj(getData('pk_user', $bk->user_id));
         $bk->user = array(
-            'id'=>$usr->id,
-            'first_name'=>$usr->first_name,
-            'last_name'=>$usr->last_name,
-            'image'=>dp_or_null($usr->image),
-            'isd_code'=>$usr->isd_code,
-            'mobile'=>$usr->mobile,
-            'email'=>$usr->email,
+            'id' => $usr->id,
+            'first_name' => $usr->first_name,
+            'last_name' => $usr->last_name,
+            'image' => dp_or_null($usr->image),
+            'isd_code' => $usr->isd_code,
+            'mobile' => $usr->mobile,
+            'email' => $usr->email,
         );
-    }else{
+    } else {
         $bk->user = null;
     }
 
     return $bk;
+}
+function format_quote(array $qoute)
+{
+    $qt = obj($qoute);
+    $qt->quote_amount = floatval($qt->quote_amount);
+    $qt->driver_id = intval($qt->driver_id);
+    $qt->booking_id = intval($qt->quote_amount);
+    $qt->is_confirmed = boolval($qt->is_confirmed );
+    return $qt;
 }
