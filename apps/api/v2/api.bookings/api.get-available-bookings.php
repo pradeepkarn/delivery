@@ -46,7 +46,8 @@ if ($user != false) {
     $bkdeata = $db->filter(assoc_arr:['status'=>'accepted'],limit:1000,ord:'desc');
     $bkdata = [];
     foreach ($bkdeata as $key => $bk) {
-        if ($bk->assigned_driver_id=='') {
+        $bkobj = obj($bk);
+        if ($bkobj->assigned_driver_id=='') {
             $bkdata[] = format_parcel_bookings($bk);
         }
     }
