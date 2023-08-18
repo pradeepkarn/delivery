@@ -47,7 +47,7 @@ if ($user != false) {
     $bkdata = [];
     foreach ($bkdeata as $key => $bk) {
         $bkobj = obj($bk);
-        if ($bkobj->assigned_driver_id=='') {
+        if ($bkobj->assigned_driver_id=='' && $bkobj->assigned_driver_id==0) {
             $bkdata[] = format_parcel_bookings($bk);
         }
     }
