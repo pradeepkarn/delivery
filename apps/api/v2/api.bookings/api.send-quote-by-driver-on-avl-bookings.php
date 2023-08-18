@@ -31,7 +31,7 @@ foreach ($data_list as $li) {
     }
     // $arr[$li] = $_POST[$li];
 }
-if (!is_integer($req->booking_id) || !is_numeric($req->quote_amount)) {
+if (!is_numeric($req->booking_id) || !is_numeric($req->quote_amount)) {
     $res['msg'] = "Invalid booking id or quote amount or both, please check";
     $res['data'] = null;
     echo json_encode($res);
