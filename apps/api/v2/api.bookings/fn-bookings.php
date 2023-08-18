@@ -149,7 +149,7 @@ function format_quote(array $qoute)
     $qt = obj($qoute);
     $qt->quote_amount = floatval($qt->quote_amount);
     $qt->driver_id = intval($qt->driver_id);
-    $qt->booking_id = intval($qt->quote_amount);
-    $qt->is_confirmed = boolval($qt->is_confirmed );
+    $qt->booking_id = intval($qt->booking_id);
+    $qt->is_confirmed = boolval($qt->is_confirmed);
     return $qt;
 }

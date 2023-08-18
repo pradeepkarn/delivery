@@ -16,7 +16,8 @@ if ($method === 'POST') {
 $data_list = [
     'token',
     'booking_id',
-    'quote_amount'
+    'quote_amount',
+    'delivery_method_id'
 ];
 
 // Initialize the response array
@@ -31,7 +32,7 @@ foreach ($data_list as $li) {
     }
     // $arr[$li] = $_POST[$li];
 }
-if (!is_integer($req->booking_id) && !is_numeric($req->quote_amount)) {
+if (!is_integer($req->booking_id) || !is_numeric($req->quote_amount) || !is_numeric($req->delivery_method_id)) {
     $res['msg'] = "Invalid booking id or quote amount or both, please check";
     $res['data'] = null;
     echo json_encode($res);
@@ -71,11 +72,19 @@ if ($user != false) {
         echo json_encode($res);
         die();
     }
+    $booking = $db->show("select * from delivery_method where id = $req->delivery_method_id");
+    if (count($booking)==0) {
+        $res['msg'] = "Method not available";
+        $res['data'] = null;
+        echo json_encode($res);
+        die();
+    }
     $db->tableName = "driver_quotes";
     $arr = null;
     $arr['booking_id'] = $req->booking_id;
     $arr['driver_id'] = $user->id;
     $arr['quote_amount'] = $req->quote_amount;
+    $arr['delivery_method_id'] = $req->delivery_method_id;
     $arr['is_confirmed'] = 0;
     $arr['remark'] = 'quoted';
     
