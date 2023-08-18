@@ -111,5 +111,32 @@ function format_parcel_bookings(array $bk) {
     $bk->height = floatval($bk->height);
     $bk->weight = floatval($bk->weight);
     $bk->driver_amount = floatval($bk->driver_amount);
+    if ($bk->assigned_driver_id!='') {
+        $drv = obj(getData('pk_user',$bk->assigned_driver_id));
+        $bk->assigned_driver = array(
+            'id'=>$drv->id,
+            'first_name'=>$drv->first_name,
+            'last_name'=>$drv->last_name,
+            'image'=>dp_or_null($drv->image),
+            'isd_code'=>$drv->isd_code,
+            'mobile'=>$drv->mobile,
+        );
+    }else{
+        $bk->assigned_driver = null;
+    }
+    if ($bk->user_id!='') {
+        $drv = obj(getData('pk_user',$bk->user_id));
+        $bk->user = array(
+            'id'=>$drv->id,
+            'first_name'=>$drv->first_name,
+            'last_name'=>$drv->last_name,
+            'image'=>dp_or_null($drv->image),
+            'isd_code'=>$drv->isd_code,
+            'mobile'=>$drv->mobile,
+        );
+    }else{
+        $bk->user = null;
+    }
+
     return $bk;
 }
