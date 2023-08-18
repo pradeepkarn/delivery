@@ -64,7 +64,13 @@ if ($user != false) {
         echo json_encode($res);
         die();
     }
-
+    $booking = $db->show("select * from parcel_bookings where id = $req->booking_id");
+    if (count($booking)==0) {
+        $res['msg'] = "Booking not found";
+        $res['data'] = null;
+        echo json_encode($res);
+        die();
+    }
     $db->tableName = "driver_quotes";
     $arr = null;
     $arr['booking_id'] = $req->booking_id;
